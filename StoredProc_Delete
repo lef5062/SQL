@@ -1,0 +1,25 @@
+ALTER PROCEDURE [dbo].[ProductCategories_Delete]
+
+	@Id INT
+
+AS
+
+/* !! TEST CODE!!
+
+	DECLARE
+		@Id INT = 11
+
+	EXEC dbo.ProductCategories_Delete
+		@Id
+
+	EXEC dbo.ProductCategories_SelectAll
+
+*/
+
+BEGIN
+
+	DELETE FROM dbo.ProductCategories
+
+	WHERE Id = @Id
+
+END
