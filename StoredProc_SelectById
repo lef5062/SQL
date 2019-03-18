@@ -1,0 +1,42 @@
+ALTER PROCEDURE [dbo].[Products_SelectById]
+	
+	@Id INT
+
+AS
+
+/*
+
+DECLARE 
+	@Id INT = 1
+
+EXEC dbo.Products_SelectById
+	@Id
+
+*/
+
+BEGIN
+
+	SELECT 
+		Id,
+		Title,
+		Quantity,
+		SKU,
+		[Description],
+		BaseTax,
+		BasePrice,
+		CurrentPrice,
+		ProductCategoryId,
+		MainImage,
+		MetaTagId,
+		isDeleted,
+		isVisible,
+		DateCreated,
+		DateModified,
+		CreatedBy,
+		ModifiedBy
+
+	FROM dbo.Products
+	WHERE Id = @Id
+
+END
+
