@@ -1,0 +1,79 @@
+ALTER PROC [dbo].[Products_SelectAllColumnsPaginatedForMerchant]
+
+	@UserId INT,
+	@PageIndex INT,
+	@PageSize INT
+
+AS
+
+/*
+	DECLARE
+		@UserId INT = 127,
+		@PageIndex INT = 2,
+		@PageSize INT = 5
+
+	EXEC dbo.Products_SelectAllColumnsPaginatedForMerchant
+		@UserId,
+		@PageIndex,
+		@PageSize
+*/
+
+BEGIN
+
+	SELECT
+		p.Id,
+		p.Title,
+		p.MainImage,
+		p.Quantity,
+		p.SKU,
+		p.[Description],
+		p.BaseTax,
+		p.BasePrice,
+		p.CurrentPrice,
+		p.ProductCategoryId,
+		p.MetaTagId,
+		p.isDeleted,
+		p.isVisible,
+		p.DateCreated,
+		p.Link,
+		TotalRows = COUNT(*) OVER (),
+		TotalPages = CEILING(CAST((COUNT(*) OVER()) AS FLOAT) / @PageSize),
+		AVG(CAST(r.Rating AS FLOAT)) AS AverageRating,
+		COUNT(r.EntityId) AS "TotalReviews"
+
+	FROM dbo.Ratings AS r
+
+	RIGHT JOIN dbo.Products AS p
+		ON r.EntityId = p.Id AND r.TypeId = 1
+
+	WHERE p.CreatedBy = @UserId 
+
+	GROUP BY 
+		r.TypeId, 
+		r.EntityId, 
+		p.Id, 
+		p.CreatedBy, 
+		p.Title, 
+		p.MainImage, 
+		p.Quantity,
+		p.SKU,
+		p.[Description],
+		p.BaseTax,
+		p.BasePrice,
+		p.CurrentPrice,
+		p.ProductCategoryId,
+		p.MetaTagId,
+		p.isDeleted,
+		p.isVisible,
+		p.DateCreated,
+		p.Link
+	
+	ORDER BY p.DateCreated DESC
+
+		OFFSET (@PageIndex * @PageSize) ROWS
+
+	FETCH NEXT @PageSize
+
+		ROWS ONLY;
+
+END
