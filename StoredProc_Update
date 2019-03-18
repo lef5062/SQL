@@ -1,0 +1,90 @@
+ALTER PROCEDURE [dbo].[Products_Update]
+
+
+	@Id INT,
+	@Title NVARCHAR(50),
+	@Quantity INT,
+	@SKU NVARCHAR(100),
+	@Description NVARCHAR(500),
+	@BaseTax DECIMAL(5,4),
+	@BasePrice DECIMAL(18,4),
+	@CurrentPrice DECIMAL(18,4),
+	@ProductCategoryId INT,
+	@MainImage NVARCHAR(255),
+	@MetaTagId INT,
+	@isDeleted BIT,
+	@isVisible BIT,
+	@ModifiedBy INT
+	
+
+AS
+
+/*
+
+DECLARE
+	@Id INT = 278,
+	@Title NVARCHAR(50) = 'Sunglasses',
+	@Quantity INT = 10,
+	@SKU NVARCHAR(100) = '458',
+	@Description NVARCHAR(500) = 'Sunglasses Bundle for purchase.',
+	@BaseTax DECIMAL(5,4) = 0.09 ,
+	@BasePrice DECIMAL(18,4) = 20.00,
+	@CurrentPrice DECIMAL(18,4) = 40.00,
+	@ProductCategoryId INT = 2,
+	@MainImage NVARCHAR(255) = 'mainimage',
+	@MetaTagId INT = 2,
+	@isDeleted BIT = 0,
+	@isVisible BIT = 1,
+	@ModifiedBy INT = 6
+	
+	
+
+	SELECT * 
+	FROM dbo.Products
+	WHERE Id = 278
+
+EXEC Products_Update
+	@Id,
+	@Title,
+	@Quantity,
+	@SKU,
+	@Description,
+	@BaseTax,
+	@BasePrice,
+	@CurrentPrice,
+	@ProductCategoryId,
+	@MainImage,
+	@MetaTagId,
+	@isDeleted,
+	@isVisible,
+	@ModifiedBy
+	
+
+	SELECT * 
+	FROM dbo.Products
+	WHERE Id = 278
+
+*/
+
+BEGIN
+
+	UPDATE dbo.Products
+	SET
+		Title = @Title,
+		Quantity = @Quantity,
+		SKU = @SKU,
+		[Description] = @Description,
+		BaseTax = @BaseTax,
+		BasePrice = @BasePrice,
+		CurrentPrice = @CurrentPrice,
+		ProductCategoryId = @ProductCategoryId,
+		MainImage = @MainImage,
+		MetaTagId = @MetaTagId,
+		isDeleted = @isDeleted,
+		isVisible = @isVisible,
+		DateModified = GETUTCDATE(),
+		ModifiedBy = @ModifiedBy
+
+	WHERE Id = @Id
+
+END
