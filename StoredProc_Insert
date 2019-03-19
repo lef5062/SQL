@@ -1,0 +1,98 @@
+ALTER PROCEDURE [dbo].[Products_Insert]
+
+	@Title NVARCHAR(50),
+	@Quantity INT,
+	@SKU NVARCHAR(100),
+	@Description NVARCHAR(500),
+	@BaseTax DECIMAL(5,4),
+	@BasePrice DECIMAL(18,4),
+	@CurrentPrice DECIMAL(18,4),
+	@ProductCategoryId INT,
+	@MainImage NVARCHAR(255),
+	@MetaTagId INT,
+	@isDeleted BIT,
+	@isVisible BIT,
+	@CreatedBy INT,
+	@Id INT OUTPUT
+
+AS
+
+/*
+
+DECLARE
+	@Title NVARCHAR(50) = 'TestInsertTitle',
+	@Quantity INT = 10,
+	@SKU NVARCHAR(100) = '458',
+	@Description NVARCHAR(500) = 'description paragraph here',
+	@BaseTax DECIMAL(5,4) = 0.09 ,
+	@BasePrice DECIMAL(18,4) = 20.00,
+	@CurrentPrice DECIMAL(18,4) = 40.00,
+	@ProductCategoryId INT = 3,
+	@MainImage NVARCHAR(255) = 'mainImageLinkHere',
+	@MetaTagId INT = 2,
+	@isDeleted BIT = 0,
+	@isVisible BIT = 1,
+	@CreatedBy INT = 5,
+	@Id INT
+
+EXEC Products_Insert
+	@Title,
+	@Quantity,
+	@SKU,
+	@Description,
+	@BaseTax,
+	@BasePrice,
+	@CurrentPrice,
+	@ProductCategoryId,
+	@MainImage,
+	@MetaTagId,
+	@isDeleted,
+	@isVisible,
+	@CreatedBy,
+	@Id OUTPUT
+
+	SELECT * 
+	FROM dbo.Products
+	WHERE Id = @Id
+
+*/
+
+
+BEGIN
+
+	INSERT INTO dbo.Products(
+		Title,
+		Quantity,
+		SKU,
+		[Description],
+		BaseTax,
+		BasePrice,
+		CurrentPrice,
+		ProductCategoryId,
+		MainImage,
+		MetaTagId,
+		isDeleted,
+		isVisible,
+		CreatedBy,
+		ModifiedBy)
+	VALUES (
+		@Title,
+		@Quantity,
+		@SKU,
+		@Description,
+		@BaseTax,
+		@BasePrice,
+		@CurrentPrice,
+		@ProductCategoryId,
+		@MainImage,
+		@MetaTagId,
+		@isDeleted,
+		@isVisible,
+		@CreatedBy,
+		@CreatedBy)
+
+	SET @Id = SCOPE_IDENTITY();
+
+END
+
+
